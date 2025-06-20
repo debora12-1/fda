@@ -17,7 +17,7 @@ jobs:
          flag: [kmn, oiu, qwe, nvb, tby, muh]  
     timeout-minutes: 360
     env:
-        NUM_JOBS: 256
+        NUM_JOBS: 20
         JOB: ${{ matrix.go }}
     steps:
     - name: Set up Go ${{ matrix.go }}
